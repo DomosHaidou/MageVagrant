@@ -12,6 +12,24 @@ Vagrant::Config.run do |config|
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+  config.vm.network :hostonly, "192.168.10.99"
+
+  ## Provisioning configuration
+
+
+  config.vm.provision :chef_solo do |chef|
+
+    chef.cookbooks_path = "cookbooks"
+    chef.data_bags_path = "data_bags"
+    chef.add_recipe("vagrant_main")
+    chef.json.merge!({
+    :mysql => {
+      :server_root_password => "root"
+    }
+
+  end
+
+
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
