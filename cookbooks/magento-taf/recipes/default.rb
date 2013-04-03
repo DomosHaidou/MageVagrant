@@ -2,9 +2,8 @@
 # Cookbook Name:: magento-taf
 # Recipe:: default
 #
-# Copyright 2012, Demac Media
+# Copyright 2013, Allan MacGregor
 #
-# All rights reserved - Do Not Redistribute
 #
 
 # Install packages

@@ -9,9 +9,12 @@ include_recipe "apache2::mod_rewrite"
 include_recipe "apache2::mod_ssl"
 include_recipe "mysql::server"
 include_recipe "php"
+include_recipe "ruby"
 include_recipe "apache2::mod_php5"
 include_recipe "phpunit"
 include_recipe "magento-taf"
+include_recipe "database::mysql"
+
 
 
 
@@ -72,6 +75,13 @@ sites.each do |name|
      code "echo 127.0.0.1 #{site["host"]} #{site["aliases"].join(' ')} >> /etc/hosts"
      code "echo 192.168.0.100 magento.localhost.com >> /etc/hosts"
    end
+
+   # Create database
+   mysql_database site["id"] do
+      connection ({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
+      action :create
+   end
+
 end
 
 # Disable default site
