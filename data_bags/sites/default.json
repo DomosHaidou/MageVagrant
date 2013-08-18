@@ -1,7 +1,7 @@
 {
     "id": "default",
     "host": "magento.localhost.com",
-    "repo": "http://svn.magentocommerce.com/source/branches/1.7",
+    "repo": "https://github.com/amacgregor/mage_1702/trunk",
     "svn_username": "",
     "svn_pasword": "",
     "aliases": [

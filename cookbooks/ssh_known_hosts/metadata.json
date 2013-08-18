@@ -1,0 +1,31 @@
+{
+  "name": "ssh_known_hosts",
+  "description": "Dyanmically generates /etc/ssh/known_hosts based on search indexes",
+  "long_description": "Chef SSH Known Hosts Cookbook\n=============================\n\nThe Chef `ssh_known_hosts` cookbook exposes resource and default\nrecipe for adding hosts and keys to the `/etc/ssh_known_hosts` file.\n\n- The default recipe builds `/etc/ssh/known_hosts` based on search\n  indexes and ohai data.\n- The LWRP provides a way to add custom entries in your own recipes.\n\nYou can also optionally put other host keys in a data bag called\n\"`ssh_known_hosts`\". See below for details.\n\n# Requirements\n\nShould work on any operating system that supports\n`/etc/ssh/ssh_known_hosts`.\n\nThe Opscode `partial_search` cookbook is required for the default\nrecipe, as well as a Chef Server that supports partial search:\n\n- Opscode Hosted Chef\n- Opscode Private Chef\n- Open Source Chef Server 11\n\n# Usage\n\n## LWRP\n\nUse the LWRP `ssh_known_hosts_entry` to append an entry for the\nspecified host in `/etc/ssh/ssh_known_hosts`. For example:\n\n```ruby\nssh_known_hosts_entry 'github.com'\n```\n\nThis will append an entry in `/etc/ssh/ssh_known_hosts` like this:\n\n    # github.com SSH-2.0-OpenSSH_5.5p1 Debian-6+squeeze1+github8\n    github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==\n\nYou can optionally specify your own key, if you don't want to use\n`ssh-keyscan`:\n\n```ruby\nssh_known_hosts_entry 'github.com' do\n  key 'node.example.com ssh-rsa ...'\nend\n```\n\n### LWRP Attributes\n\n<table>\n  <thead>\n    <tr>\n      <th>Attribute</th>\n      <th>Description</th>\n      <th>Example</th>\n      <th>Default</th>\n    </tr>\n  </thead>\n\n  <tbody>\n    <tr>\n      <td>host</td>\n      <td>the host to add</td>\n      <td><tt>github.com</tt></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>key</td>\n      <td>(optional) provide your own key</td>\n      <td><tt>ssh-rsa ...</tt></td>\n      <td><tt>ssh-keyscan -H #{host}</tt></td>\n    </tr>\n  </tbody>\n</table>\n\n- - -\n\n## Default Recipe\n\nSearches the Chef Server for all hosts that have SSH host keys and\ngenerates an `/etc/ssh/ssh_known_hosts`.\n\n### Adding custom host keys\n\nThere are two ways to add custom host keys. You can either use the\nprovided LWRP (see above), or by creating a data bag called\n\"`ssh_known_hosts`\" and adding an item for each host:\n\n```javascript\n{\n  \"id\": \"github\",\n  \"fqdn\": \"github.com\",\n  \"rsa\": \"github-rsa-host-key\"\n}\n```\n\nThere are additional optional values you may use in the data bag:\n\n<table>\n  <thead>\n    <tr>\n      <th>Attribute</th>\n      <th>Description</th>\n      <th>Example</th>\n      <th>Default</th>\n    </tr>\n  </thead>\n\n  <tbody>\n    <tr>\n      <td>id</td>\n      <td>a unique id for this data bag entry</td>\n      <td><tt>github</tt></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>fqdn</td>\n      <td>the fqdn of the host</td>\n      <td><tt>github.com</tt></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>rsa</td>\n      <td>the rsa key for this server</td>\n      <td><tt>ssh-rsa AAAAB3...</tt></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>ipaddress</td>\n      <td>the ipaddress of the node (if fqdn is missing)</td>\n      <td><tt>1.1.1.1</tt></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>hostname</td>\n      <td>local hostname of the server (if not a fqdn)</td>\n      <td><tt>myserver.local</tt></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td>dsa</td>\n      <td>the dsa key for this server</td>\n      <td><tt>ssh-dsa ABAAC3...</tt></td>\n      <td></td>\n    </tr>\n  </tbody>\n</table>\n\n# License and Authors\n\n- Author: Scott M. Likens (<scott@likens.us>)\n- Author: Seth Vargo (<sethvargo@gmail.com>)\n- Author: Lamont Granquist (<lamont@opscode.com>)\n\nCopyright:: 2011-2013, Opscode, Inc\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n",
+  "maintainer": "Opscode, Inc.",
+  "maintainer_email": "cookbooks@opscode.com",
+  "license": "Apache 2.0",
+  "platforms": {
+  },
+  "dependencies": {
+    "partial_search": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+    "ssh_known_hosts": "Provides an LWRP for managing SSH known hosts. Also includes a recipe for automatically adding all nodes to the SSH known hosts."
+  },
+  "version": "1.0.0"
+}

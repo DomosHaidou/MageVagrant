@@ -61,13 +61,11 @@ sites.each do |name|
   end  
 
   # Checkout a copy from the trunk
-  subversion site["host"] do
+  git site["host"] do
+    repository "git@github.com:amacgregor/mage_1702.git"
+    reference "master" # or "HEAD" or "TAG_for_1.0" or (subversion) "1234"
+    action :checkout
     destination "/srv/www/#{site["host"]}/public_html"
-    repository site["repo"]
-    revision "HEAD"
-    svn_username site["svn_username"]
-    svn_password site["svn_password"]
-    action :sync
   end
 
    # Add site info in /etc/hosts
