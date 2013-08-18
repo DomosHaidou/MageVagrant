@@ -61,13 +61,13 @@ sites.each do |name|
   end  
 
   # Checkout a copy from the trunk
-  git site["host"] do
-    repository "git@github.com:amacgregor/mage_1702.git"
-    reference "master" # or "HEAD" or "TAG_for_1.0" or (subversion) "1234"
-    action :checkout
+  subversion site["host"] do
+    repository "#{site["repo"]}"
+    revision "HEAD"
     destination "/srv/www/#{site["host"]}/public_html"
+    action :sync
   end
-
+  
    # Add site info in /etc/hosts
    bash "hosts" do
      code "echo 127.0.0.1 #{site["host"]} #{site["aliases"].join(' ')} >> /etc/hosts"
