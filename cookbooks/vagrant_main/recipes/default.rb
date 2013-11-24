@@ -65,7 +65,7 @@ sites.each do |name|
     repository "#{site["repo"]}"
     revision "HEAD"
     destination "/srv/www/#{site["host"]}/public_html"
-    action :sync
+    action :export
   end
   
    # Add site info in /etc/hosts
