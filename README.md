@@ -9,7 +9,7 @@ Magento Developer's Guide book.
 - Automatic setup and configuration of Magento instances
 - Automated checkout from the SVN
 - Automated Database creation
-- Magento TAF (Test Automated Framework) receipe included
+- Magento TAF (Test Automated Framework) recipe included
 
 ## Requirements
 
